@@ -13,7 +13,7 @@ The repository now includes the initial production backend foundation:
 - Supabase SSR browser/server clients, session refresh proxy, email/password signup and sign-in, auth callback, and protected workspace overview.
 - Vercel environment variables for the Supabase URL and publishable key.
 
-The overview dashboard still contains illustrative metrics. The live `/workspace` page reads actual authenticated workspace and resource counts. GPU training, inference, evaluation execution, API-key issuance, and model serving are not implemented yet.
+The overview dashboard still contains illustrative metrics. The live `/workspace` page reads actual authenticated workspace and resource counts. The Kaggle notebook provides a manually launched, bounded LoRA fine-tuning path; automated training orchestration, adapter import, inference, evaluation execution, API-key issuance, and model serving are not implemented yet.
 
 ## Stack
 
