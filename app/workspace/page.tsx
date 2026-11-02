@@ -29,9 +29,9 @@ export default async function WorkspacePage() {
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(170px,1fr))",gap:13,marginTop:28}}>
         {[[ "Models", models.count ?? 0 ],["Datasets",datasets.count ?? 0],["Active jobs",jobs.count ?? 0],["Workspaces",workspaces?.length ?? 0]].map(([label,value])=><div key={String(label)} style={{background:"#121722",border:"1px solid #293040",borderRadius:12,padding:18}}><div style={{fontSize:12,color:"#929bad"}}>{label}</div><div style={{fontSize:29,fontFamily:"Space Grotesk",marginTop:8}}>{value}</div></div>)}
       </div>
-      <h2 style={{fontSize:16,marginTop:34}}>Your workspaces</h2>
+      <div style={{display:"flex",gap:10,flexWrap:"wrap",marginTop:26}}><Link href="/datasets" style={{background:"#8978f5",borderRadius:9,padding:"10px 15px",fontSize:12,fontWeight:700}}>Manage datasets →</Link></div>\n      <h2 style={{fontSize:16,marginTop:34}}>Your workspaces</h2>
       <div style={{display:"grid",gap:10,marginTop:12}}>{(workspaces ?? []).map(w=><div key={w.id} style={{background:"#121722",border:"1px solid #293040",borderRadius:11,padding:16,display:"flex",justifyContent:"space-between",alignItems:"center"}}><div><strong>{w.name}</strong><div style={{fontSize:11,color:"#828b9c",marginTop:5}}>{w.slug}</div></div><span style={{fontSize:11,color:"#67dcb7"}}>Connected</span></div>)}{!workspaces?.length&&<p style={{color:"#929bad",fontSize:13}}>No workspace found yet. Your first workspace is created automatically after account confirmation.</p>}</div>
-      <p style={{marginTop:28,fontSize:12,color:"#737e91",lineHeight:1.7}}>This is the first live backend slice. Model creation, dataset upload, training workers, inference, and deployment controls are the next implementation milestones.</p>
+      <p style={{marginTop:28,fontSize:12,color:"#737e91",lineHeight:1.7}}>Dataset uploads are stored privately and scoped to your workspace. Model creation, training workers, inference, and deployment controls are the next implementation milestones.</p>
     </section>
   </main>;
 }
