@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 type Model = { id:string; name:string; description:string|null; base_model:string; task:string; status:string; latest_version:string|null; created_at:string };
-const bases = ["meta-llama/Llama-3.2-1B","Qwen/Qwen2.5-1.5B","google/gemma-2-2b","microsoft/Phi-3.5-mini-instruct","custom"];
+const bases = ["distilbert/distilgpt2","meta-llama/Llama-3.2-1B","Qwen/Qwen2.5-1.5B","google/gemma-2-2b","microsoft/Phi-3.5-mini-instruct","custom"];
 
 export default function ModelManager({workspaceId,initialModels}:{workspaceId:string;initialModels:Model[]}) {
   const [models,setModels]=useState(initialModels);
