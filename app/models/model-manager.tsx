@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 type Model = { id:string; name:string; description:string|null; base_model:string; task:string; status:string; latest_version:string|null; created_at:string };
-const bases = ["distilbert/distilgpt2","meta-llama/Llama-3.2-1B","Qwen/Qwen2.5-1.5B","google/gemma-2-2b","microsoft/Phi-3.5-mini-instruct","custom"];
+const bases = ["distilgpt2","meta-llama/Llama-3.2-1B","Qwen/Qwen2.5-1.5B","google/gemma-2-2b","microsoft/Phi-3.5-mini-instruct","custom"];
 
 export default function ModelManager({workspaceId,initialModels}:{workspaceId:string;initialModels:Model[]}) {
   const [models,setModels]=useState(initialModels);
@@ -40,7 +40,7 @@ export default function ModelManager({workspaceId,initialModels}:{workspaceId:st
   return <div style={{display:"grid",gap:18,marginTop:26}}>
     <section style={panel}>
       <h2 style={{fontSize:15,margin:"0 0 7px"}}>Create model project</h2>
-      <p style={{fontSize:12,color:"#929bad",margin:"0 0 17px"}}>Register a base language model and task configuration. Training will be enabled when a secure worker is connected.</p>
+      <p style={{fontSize:12,color:"#929bad",margin:"0 0 17px"}}>Register a base language model and task configuration. The distilgpt2 starter can be fine-tuned manually in a Kaggle free GPU notebook.</p>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(210px,1fr))",gap:12}}>
         <label style={label}>Model name<input value={name} onChange={e=>setName(e.target.value)} maxLength={80} placeholder="My support assistant" style={field}/></label>
         <label style={label}>Base model<select value={baseModel} onChange={e=>setBaseModel(e.target.value)} style={field}>{bases.map(b=><option key={b} value={b}>{b}</option>)}</select></label>
