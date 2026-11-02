@@ -33,9 +33,9 @@ export default async function TrainingPage() {
         <Link href="/workspace" style={{color:"#a99cff",fontSize:13}}>← Workspace</Link>
       </header>
       <section style={{marginTop:38}}>
-        <p style={{fontSize:11,letterSpacing:2,color:"#a99cff"}}>MODEL TRAINING · FREE CPU</p>
+        <p style={{fontSize:11,letterSpacing:2,color:"#a99cff"}}>MODEL TRAINING · FREE KAGGLE GPU</p>
         <h1 style={{fontSize:32,margin:"8px 0"}}>Training jobs</h1>
-        <p style={{color:"#929bad",fontSize:14}}>Create a training record and run a small LoRA experiment manually in a free cloud CPU notebook.</p>
+        <p style={{color:"#929bad",fontSize:14}}>Create a training record and run a small LoRA fine-tuning experiment manually on Kaggle's free GPU quota.</p>
         <TrainingManager workspaceId={workspace.id} userId={userId} models={models ?? []} datasets={downloadableDatasets} initialJobs={jobs ?? []}/>
       </section>
     </div>
