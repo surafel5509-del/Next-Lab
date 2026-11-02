@@ -11,13 +11,14 @@ const notebookUrl = "https://colab.research.google.com/github/surafel5509-del/Ne
 
 export default function TrainingManager({workspaceId,userId,models,datasets,initialJobs}:{workspaceId:string;userId:string;models:Model[];datasets:Dataset[];initialJobs:Job[]}) {
   const [jobs,setJobs]=useState(initialJobs);
-  const [modelId,setModelId]=useState(models[0]?.id ?? "");
+  const cpuModels=models.filter(m=>m.base_model==="distilbert/distilgpt2");
+  const [modelId,setModelId]=useState(cpuModels[0]?.id ?? "");
   const [datasetId,setDatasetId]=useState(datasets[0]?.id ?? "");
   const [busy,setBusy]=useState(false);
   const [message,setMessage]=useState("");
   const router=useRouter();
   const supabase=createClient();
-  const selectedModel=models.find(m=>m.id===modelId);
+  const selectedModel=cpuModels.find(m=>m.id===modelId);
   const selectedDataset=datasets.find(d=>d.id===datasetId);
 
   async function createJob() {
@@ -43,9 +44,9 @@ export default function TrainingManager({workspaceId,userId,models,datasets,init
     <section style={panel}>
       <h2 style={{fontSize:15,margin:"0 0 7px"}}>Start a free CPU experiment</h2>
       <p style={{fontSize:12,color:"#929bad",lineHeight:1.7,margin:"0 0 16px"}}>This creates a queued record in Next Lab. Actual training runs only after you open the notebook and execute it yourself. No GPU, paid runtime, or automatic cloud worker is started.</p>
-      {!models.length || !datasets.length ? <p style={{fontSize:12,color:"#e7c078"}}>You need at least one model and one ready dataset. Create them in <a href="/models" style={{color:"#a99cff"}}>Models</a> and <a href="/datasets" style={{color:"#a99cff"}}>Datasets</a>.</p> : <>
+      {!models.length || !datasets.length ? <p style={{fontSize:12,color:"#e7c078"}}>You need a model whose base model is distilbert/distilgpt2 and one ready dataset. Create them in <a href="/models" style={{color:"#a99cff"}}>Models</a> and <a href="/datasets" style={{color:"#a99cff"}}>Datasets</a>.</p> : <>
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:12}}>
-          <label style={label}>Model<select value={modelId} onChange={e=>setModelId(e.target.value)} style={field}>{models.map(m=><option key={m.id} value={m.id}>{m.name} · {m.base_model}</option>)}</select></label>
+          <label style={label}>Model<select value={modelId} onChange={e=>setModelId(e.target.value)} style={field}>{cpuModels.map(m=><option key={m.id} value={m.id}>{m.name} · {m.base_model}</option>)}</select></label>
           <label style={label}>Training dataset<select value={datasetId} onChange={e=>setDatasetId(e.target.value)} style={field}>{datasets.map(d=><option key={d.id} value={d.id}>{d.name} ({d.file_name ?? "file"})</option>)}</select></label>
         </div>
         <div style={{display:"flex",gap:10,flexWrap:"wrap",marginTop:16}}>
@@ -59,7 +60,7 @@ export default function TrainingManager({workspaceId,userId,models,datasets,init
     <section style={{...panel,padding:0,overflow:"hidden"}}>
       <div style={{padding:"17px 20px",borderBottom:"1px solid #293040",display:"flex",justifyContent:"space-between"}}><h2 style={{fontSize:14,margin:0}}>Training history</h2><span style={{fontSize:11,color:"#929bad"}}>{jobs.length} jobs</span></div>
       {!jobs.length?<p style={{padding:22,color:"#929bad",fontSize:13}}>No training jobs yet.</p>:jobs.map(job=>{
-        const model=models.find(m=>m.id===job.model_id);
+        const model=cpuModels.find(m=>m.id===job.model_id);
         const dataset=datasets.find(d=>d.id===job.dataset_id);
         const manual=job.config?.runner==="google-colab-free-cpu-manual";
         return <article key={job.id} style={{padding:"16px 20px",borderBottom:"1px solid #222a38"}}>
