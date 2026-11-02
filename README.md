@@ -33,8 +33,8 @@ The overview dashboard still contains illustrative metrics. The live `/workspace
 ## Product roadmap
 
 1. Complete authentication UX, profile and workspace management.
-2. Dataset upload, validation, versioning, and signed download URLs.
-3. Model registry and model creation/configuration.
+2. Dataset upload, workspace-scoped private storage, and signed download URLs (dashboard limit: 5 MB).
+3. Model registry and persistent model project creation/configuration.
 4. Queue-backed training job API and isolated Python/GPU workers.
 5. Evaluation runner, benchmark tracking, and model comparison.
 6. Inference playground with streaming responses.
