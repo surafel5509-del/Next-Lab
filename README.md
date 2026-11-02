@@ -52,3 +52,10 @@ The overview dashboard still contains illustrative metrics. The live `/workspace
 ## Environment variables
 
 See `.env.example`.
+
+## Free model-training starter
+
+A Google Colab LoRA fine-tuning notebook is available at [`notebooks/Next_Lab_Free_LoRA_Training.ipynb`](notebooks/Next_Lab_Free_LoRA_Training.ipynb). Open the notebook in Colab, select a free GPU runtime if one is offered, upload a CSV (`text` column) or JSONL (`text` field) dataset exported from Next Lab, and run the cells manually.
+
+**Important limits:** Colab's free GPU availability and runtime limits are dynamic and not guaranteed. This notebook performs a user-started training run and exports a LoRA adapter; it does not provide a persistent worker, automatically sync training state back into Next Lab, or deploy an inference endpoint. No paid compute is started. See [Google Colab's official FAQ](https://research.google.com/colaboratory/faq.html) for current restrictions and resource limits.
+
