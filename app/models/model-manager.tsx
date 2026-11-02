@@ -48,7 +48,7 @@ export default function ModelManager({workspaceId,initialModels}:{workspaceId:st
         <label style={label}>Description<input value={description} onChange={e=>setDescription(e.target.value)} maxLength={500} placeholder="What will this model do?" style={field}/></label>
       </div>
       {baseModel==="custom"&&<label style={{...label,marginTop:12}}>Custom model identifier<input value={customBase} onChange={e=>setCustomBase(e.target.value)} placeholder="organization/model-name" style={field}/></label>}
-      <button disabled={busy} onClick={createModel} style={{marginTop:16,background:"#8978f5",border:0,borderRadius:8,color:"#fff",padding:"10px 16px",fontWeight:700,opacity:busy?.6:1}}>{busy?"Creating…":"Create model"}</button>
+      <button disabled={busy} onClick={createModel} style={{marginTop:16,background:"#8978f5",border:0,borderRadius:8,color:"#fff",padding:"10px 16px",fontWeight:700,opacity:busy ? 0.6 : 1}}>{busy?"Creating…":"Create model"}</button>
       {message&&<p role="status" style={{fontSize:12,color:message.includes("created")?"#67dcb7":"#f0b56b"}}>{message}</p>}
     </section>
     <section style={{...panel,padding:0,overflow:"hidden"}}>
