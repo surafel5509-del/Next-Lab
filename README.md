@@ -1,48 +1,54 @@
 # Next Lab
 
-A premium text-AI model development workspace for creating, fine-tuning, evaluating, and deploying language models.
+A text-AI model development platform for creating, fine-tuning, evaluating, and deploying language models.
 
-## Current status
+## Live foundation status
 
-**Foundation / dashboard prototype.** The first committed slice establishes a responsive dark UI and navigation shell inspired by the supplied COMETA training-pipeline reference. Dashboard numbers and pipeline events are illustrative demo content, not live infrastructure telemetry. Backend integrations are not yet connected.
+The repository now includes the initial production backend foundation:
+
+- Next.js App Router, React, and TypeScript dashboard shell.
+- Supabase project with PostgreSQL schema for profiles, workspaces, members, datasets, models, training jobs, evaluations, deployments, API keys, and usage events.
+- Row-level security policies for workspace isolation.
+- Private Supabase Storage bucket for dataset uploads with workspace-scoped access policies.
+- Supabase SSR browser/server clients, session refresh proxy, email/password signup and sign-in, auth callback, and protected workspace overview.
+- Vercel environment variables for the Supabase URL and publishable key.
+
+The overview dashboard still contains illustrative metrics. The live `/workspace` page reads actual authenticated workspace and resource counts. GPU training, inference, evaluation execution, API-key issuance, and model serving are not implemented yet.
 
 ## Stack
 
 - Next.js App Router, React, TypeScript
-- Supabase (planned: Auth, PostgreSQL, Storage, RLS)
-- FastAPI + Redis/Celery workers (planned)
-- PyTorch, Hugging Face Transformers, PEFT/LoRA (planned)
+- Supabase Auth, PostgreSQL, Storage, and RLS
+- Planned worker layer: Python/FastAPI + Redis queue + isolated GPU workers
+- Planned model runtime: PyTorch, Hugging Face Transformers, PEFT/LoRA
 
-## Run locally
+## Local setup
 
 1. Install Node.js 20.9+.
 2. Run `npm install`.
-3. Copy `.env.example` to `.env.local` and configure credentials as needed.
+3. Copy `.env.example` to `.env.local` and set the Supabase project URL and publishable key.
 4. Run `npm run dev` and open http://localhost:3000.
+5. Visit `/login` to create an account or sign in. Supabase Auth email confirmation must be enabled/configured for the production domain.
 
-## Product modules
+## Product roadmap
 
-- Workspace dashboard and training pipeline overview
-- Model catalog and model creation wizard
-- Dataset upload, validation, and versioning
-- Asynchronous training jobs and GPU worker orchestration
-- AI playground and inference adapters
-- Evaluations and model comparisons
-- Deployment endpoints and API key management
-- Usage metering, billing, marketplace
-- Organization roles, audit logs, admin tools
+1. Complete authentication UX, profile and workspace management.
+2. Dataset upload, validation, versioning, and signed download URLs.
+3. Model registry and model creation/configuration.
+4. Queue-backed training job API and isolated Python/GPU workers.
+5. Evaluation runner, benchmark tracking, and model comparison.
+6. Inference playground with streaming responses.
+7. Deployment endpoints, API key hashing/rotation, usage metering, and quotas.
+8. Audit logs, observability, security review, automated tests, and CI.
 
-## Security and architecture
+## Security notes
 
-Use a modular monolith for the product API and isolated asynchronous workers for GPU workloads. Keep training and inference adapters replaceable. Enforce tenant isolation in database policies and APIs, validate file uploads, and keep service credentials server-side only. Never mark a training job successful without worker-confirmed completion.
+- Tenant isolation is enforced through PostgreSQL row-level security.
+- Dataset objects are stored in a private bucket under workspace-scoped paths.
+- Only the Supabase publishable key is used in browser code. Never commit service-role keys or other server secrets.
+- Do not mark a training job successful without worker-confirmed completion.
+- Validate uploaded file size, MIME type, content, and workspace ownership on the server/worker path.
 
-See `.env.example` for the environment variable template. Never commit real credentials or service-role keys.
+## Environment variables
 
-## Next steps
-
-1. Add Supabase SSR authentication and protected routes.
-2. Add SQL migrations and RLS policies for profiles, workspaces, models, datasets, jobs, versions, evaluations, deployments, API keys, and audit events.
-3. Implement private dataset uploads and signed URLs.
-4. Add FastAPI job orchestration and Redis-backed workers.
-5. Integrate inference and streaming chat.
-6. Add automated tests, CI, deployment, and monitoring.
+See `.env.example`.
