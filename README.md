@@ -41,6 +41,10 @@ The overview dashboard still contains illustrative metrics. The live `/workspace
 7. Deployment endpoints, API key hashing/rotation, usage metering, and quotas.
 8. Audit logs, observability, security review, automated tests, and CI.
 
+## Free CPU training starter
+
+The first CPU-only experiment is available in [`notebooks/Next_Lab_Free_CPU_LoRA_Training.ipynb`](notebooks/Next_Lab_Free_CPU_LoRA_Training.ipynb). It uses `distilbert/distilgpt2` with LoRA, limits the first run to 25 steps and 300 rows, and requires a manual CSV/JSONL upload. Create a model using the exact `distilbert/distilgpt2` base model for this initial workflow. Open `/training` to create a job record, download the dataset, and launch the notebook. The job record remains queued until a verified artifact import workflow exists; creating it does not start training. Free CPU training may be slow or interrupted. No paid compute is activated.
+
 ## Security notes
 
 - Tenant isolation is enforced through PostgreSQL row-level security.
@@ -55,7 +59,7 @@ See `.env.example`.
 
 ## Free model-training starter
 
-A Google Colab LoRA fine-tuning notebook is available at [`notebooks/Next_Lab_Free_LoRA_Training.ipynb`](notebooks/Next_Lab_Free_LoRA_Training.ipynb). Open the notebook in Colab, select a free GPU runtime if one is offered, upload a CSV (`text` column) or JSONL (`text` field) dataset exported from Next Lab, and run the cells manually.
+A Google Colab LoRA fine-tuning notebook is available at [`notebooks/Next_Lab_Free_LoRA_Training.ipynb`](notebooks/Next_Lab_Free_LoRA_Training.ipynb). This is an optional GPU-capable path; for the selected free-only CPU workflow, use the CPU notebook described above.
 
 **Important limits:** Colab's free GPU availability and runtime limits are dynamic and not guaranteed. This notebook performs a user-started training run and exports a LoRA adapter; it does not provide a persistent worker, automatically sync training state back into Next Lab, or deploy an inference endpoint. No paid compute is started. See [Google Colab's official FAQ](https://research.google.com/colaboratory/faq.html) for current restrictions and resource limits.
 
