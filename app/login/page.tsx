@@ -20,7 +20,7 @@ export default function LoginPage() {
     try {
       const supabase = createClient();
       if (mode === "signup") {
-        const { data, error: authError } = await supabase.auth.signUp({ email, password, options: { data: { name } } });
+        const { data, error: authError } = await supabase.auth.signUp({ email, password, options: { data: { name }, emailRedirectTo: `${window.location.origin}/auth/callback` } });
         if (authError) throw authError;
         if (!data.session) setMessage("Account created. Check your email to confirm your address, then sign in.");
         else router.push("/workspace");
@@ -49,7 +49,7 @@ export default function LoginPage() {
         <label style={{display:"grid",gap:7,color:"#b9c0ce",fontSize:12}}>Password<input required minLength={8} type="password" value={password} onChange={e=>setPassword(e.target.value)} autoComplete={mode==="signin"?"current-password":"new-password"} style={field}/></label>
         {error && <p role="alert" style={{color:"#ff9292",fontSize:12,margin:0}}>{error}</p>}
         {message && <p role="status" style={{color:"#74dfb9",fontSize:12,margin:0}}>{message}</p>}
-        <button disabled={busy} type="submit" style={{marginTop:5,padding:13,border:0,borderRadius:9,background:"#8978f5",color:"white",fontWeight:700,opacity:busy?.65:1}}>{busy?"Please wait…":mode==="signin"?"Sign in to Next Lab":"Create account"}</button>
+        <button disabled={busy} type="submit" style={{marginTop:5,padding:13,border:0,borderRadius:9,background:"#8978f5",color:"white",fontWeight:700,opacity: busy ? 0.65 : 1}}>{busy?"Please wait…":mode==="signin"?"Sign in to Next Lab":"Create account"}</button>
       </form>
       <p style={{fontSize:11,color:"#697386",lineHeight:1.6,marginTop:20}}>By continuing, you agree to use Next Lab responsibly. Your workspace data is isolated by database row-level security.</p>
     </section>
